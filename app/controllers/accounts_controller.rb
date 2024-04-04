@@ -1,4 +1,13 @@
 class AccountsController < ApplicationController
+  def show
+    account = Account.find_by(id: params[:id])
+    if account
+      render json: { balance: account.balance, account_number: account.account_number, account_type: account.account_type }, status: :ok
+    else
+      render json: { error: 'Account not found' }, status: :not_found
+    end
+  end
+
   def deposit
     account = Account.find_by(account_number: params[:account_number])
     if account
