@@ -1,24 +1,73 @@
-# README
+# Users API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Endpoints
 
-Things you may want to cover:
+### POST /users/register
 
-* Ruby version
+Registers a new user with 2000.00 beginning balance
 
-* System dependencies
+**Request Body:**
 
-* Configuration
+```json
+{
+  "full_name": "example",
+  "username": "example",
+  "password": "password123",
+  "email": "example@example.com"
+}
+```
 
-* Database creation
+### GET /users
 
-* Database initialization
+Retrieves all users along with their associated accounts.
 
-* How to run the test suite
+# Accounts API
 
-* Services (job queues, cache servers, search engines, etc.)
+## Endpoints
 
-* Deployment instructions
+### POST /accounts/deposit
 
-* ...
+Deposits an amount into a specified account.
+
+**Request Body:**
+
+```json
+{
+  "account_number": "12345678-1",
+  "amount": 1000.0
+}
+```
+
+### POST /accounts/withdraw
+
+Withdraws an amount from a specified account.
+
+**Request Body:**
+
+```json
+{
+  "account_number": "12345678-1",
+  "amount": 1000.0
+}
+```
+
+### POST /accounts/transfer
+
+Transfers an amount from one account to another.
+
+**Request Body:**
+
+```json
+{
+  "from_account_number": "12345678-1",
+  "to_account_number": "12345678-2",
+  "amount": 1000.0
+}
+```
+
+### GET /accounts/:id
+
+Retrieves the balance, bank number, and bank type of a specified account.
+
+**Path Parameters:**
+`id`: The ID of the account.
