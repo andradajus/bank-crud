@@ -2,7 +2,7 @@
 
 ## Endpoints
 
-### POST /users/register
+### POST /users/
 
 Registers a new user with 2000.00 beginning balance
 
@@ -10,10 +10,12 @@ Registers a new user with 2000.00 beginning balance
 
 ```json
 {
-  "full_name": "example",
-  "username": "example",
-  "password": "password123",
-  "email": "example@example.com"
+  "user": {
+    "full_name": "example",
+    "username": "example",
+    "password": "password123",
+    "email": "example@example.com"
+  }
 }
 ```
 
