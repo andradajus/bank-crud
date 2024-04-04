@@ -30,4 +30,28 @@ class AccountsController < ApplicationController
       render json: { error: 'Account not found' }, status: :not_found
     end
   end
+
+  def transfer
+    from_account = Account.find_by(account_number: params[:from_account_number])
+    to_account = Account.find_by(account_number: params[:to_account_number])
+
+    if from_account && to_account
+      if from_account.balance >= params[:amount].to_d
+        from_account.balance -= params[:amount].to_d
+        to_account.balance += params[:amount].to_d
+
+        Account.transaction do
+          if from_account.save && to_account.save
+            render json: { message: 'Transfer successful', from_account_balance: from_account.balance, to_account_balance: to_account.balance }, status: :ok
+          else
+            render json: { errors: from_account.errors.full_messages + to_account.errors.full_messages }, status: :unprocessable_entity
+          end
+        end
+      else
+        render json: { error: 'Insufficient balance' }, status: :unprocessable_entity
+      end
+    else
+      render json: { error: 'Account not found' }, status: :not_found
+    end
+  end
 end
